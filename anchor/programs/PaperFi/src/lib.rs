@@ -23,20 +23,28 @@ pub mod PaperFi {
         Ok(())
     }
 
-    pub fn new_user(context: Context<NewUser>, name: String, title: String) -> Result<()> {
+    pub fn signup(context: Context<NewUser>, name: String, title: String) -> Result<()> {
         context.accounts.new_user(name, title, context.bumps)?;
         Ok(())
     }
 
     pub fn edit_user(context: Context<EditUser>, params: EditUserParams) -> Result<()> {
-        edit_user::edit_user(context, params)
-    }
-    /* 
-    pub fn new_paper(context: Context<NewPaper>) -> Result<()> {
-        //TODO
+        edit_user::edit_user(context, params)?;
         Ok(())
     }
 
+    pub fn new_paper(
+        context: Context<NewPaper>,
+        authors: String,
+        title: String,
+        intro: String,
+        price: u16
+    ) -> Result<()> {
+        context.accounts.new_paper(authors, title, intro, price, context.bumps)?;
+        Ok(())
+    }
+
+    /* 
     pub fn edit_paper(context: Context<EditPaper>) -> Result<()> {
         //TODO
         Ok(())

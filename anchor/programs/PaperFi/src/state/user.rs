@@ -17,8 +17,6 @@ pub struct User {
     pub timestamp: u64,
     // [max_len(48)]
     // institution: String,
-    // pub papers_owned: Vec<Pubkey>,  ------> Another way can be by indexing
-    // pub papers_published: Vec<Pubkey> ------> Another way can be by indexing
 }
 
 /*
@@ -44,6 +42,8 @@ Front end:
 //ANCHOR PROGRAM
 let discriminator = anchor_lang::sighash("account:PaperOwned");
 msg!("PaperOwned Discriminator: {:?}", PaperOwned::DISCRIMINATOR);
+
+//Or get Discriminator from the IDL
 
 //FRONT END
 async function getPapersOwnedByUser(userPubkey) {
