@@ -1,11 +1,8 @@
 use anchor_lang::prelude::*;
 
 #[account]
-#[derive(InitSpace)]
 pub struct User {
-    #[max_len(48)]
     pub name: String,
-    #[max_len(32)]
     pub title: String,
     pub purchases: u16,
     pub papers: u16, //published
@@ -19,8 +16,23 @@ pub struct User {
     // institution: String,
 }
 
+impl anchor_lang::Space for User {
+    const INIT_SPACE: usize =
+        8 + // Anchor discriminator
+        (48 + 4) + // name (max 48 chars + prefix)
+        (32 + 4) + // title (max 32 chars + prefix)
+        2 + // purchases (u16)
+        2 + // papers (u16)
+        2 + // reviews (u16)
+        32 + // owner (Pubkey)
+        32 + // vault (Pubkey)
+        1 + // bump (u8)
+        1 + // vault_bump (u8)
+        8; // timestamp (u64)
+}
+
 /*
-//COONECTING PAPERS BOUGH WITH USERS BY PDAS:
+//COONECTING PAPERS BOUGHt WITH USERS BY PDAS:
 
 STATE PDA
 

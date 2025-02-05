@@ -11,7 +11,7 @@ pub struct NewUser<'info> {
     #[account(
         init,
         payer = signer,
-        space = 8 + User::INIT_SPACE,
+        space = User::INIT_SPACE,
         seeds = [b"user", signer.key().as_ref()],
         bump
     )]

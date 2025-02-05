@@ -14,6 +14,90 @@ export type PaperFi = {
   },
   "instructions": [
     {
+      "name": "editPaper",
+      "discriminator": [
+        239,
+        7,
+        31,
+        141,
+        211,
+        193,
+        82,
+        211
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "user",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "paper",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              },
+              {
+                "kind": "arg",
+                "path": "id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": "u64"
+        },
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "editPaperParams"
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "editUser",
       "discriminator": [
         154,
@@ -29,14 +113,28 @@ export type PaperFi = {
         {
           "name": "owner",
           "writable": true,
-          "signer": true,
-          "relations": [
-            "user"
-          ]
+          "signer": true
         },
         {
           "name": "user",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
         }
       ],
       "args": [
@@ -140,10 +238,7 @@ export type PaperFi = {
         {
           "name": "owner",
           "writable": true,
-          "signer": true,
-          "relations": [
-            "user"
-          ]
+          "signer": true
         },
         {
           "name": "user",
@@ -185,8 +280,8 @@ export type PaperFi = {
                 "path": "user"
               },
               {
-                "kind": "account",
-                "path": "owner"
+                "kind": "arg",
+                "path": "id"
               }
             ]
           }
@@ -197,6 +292,10 @@ export type PaperFi = {
         }
       ],
       "args": [
+        {
+          "name": "id",
+          "type": "u64"
+        },
         {
           "name": "authors",
           "type": "string"
@@ -212,6 +311,148 @@ export type PaperFi = {
         {
           "name": "price",
           "type": "u16"
+        },
+        {
+          "name": "uri",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "reviewPaper",
+      "discriminator": [
+        143,
+        66,
+        152,
+        52,
+        94,
+        165,
+        129,
+        123
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "reviewerUserAccount",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "paper.owner",
+                "account": "paper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "paper",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              },
+              {
+                "kind": "arg",
+                "path": "id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "review",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  105,
+                  101,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "paper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": "u64"
+        },
+        {
+          "name": "verdict",
+          "type": {
+            "defined": {
+              "name": "verdict"
+            }
+          }
+        },
+        {
+          "name": "uri",
+          "type": "string"
         }
       ]
     },
@@ -325,6 +566,19 @@ export type PaperFi = {
       ]
     },
     {
+      "name": "review",
+      "discriminator": [
+        124,
+        63,
+        203,
+        215,
+        226,
+        30,
+        222,
+        15
+      ]
+    },
+    {
       "name": "user",
       "discriminator": [
         159,
@@ -376,6 +630,68 @@ export type PaperFi = {
       }
     },
     {
+      "name": "editPaperParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authors",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "title",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "intro",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "listed",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "price",
+            "type": {
+              "option": "u16"
+            }
+          },
+          {
+            "name": "reviews",
+            "type": {
+              "option": "u32"
+            }
+          },
+          {
+            "name": "sales",
+            "type": {
+              "option": "u32"
+            }
+          },
+          {
+            "name": "version",
+            "type": {
+              "option": "u32"
+            }
+          },
+          {
+            "name": "paperUri",
+            "type": {
+              "option": "string"
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "editUserParams",
       "type": {
         "kind": "struct",
@@ -409,12 +725,6 @@ export type PaperFi = {
             "type": {
               "option": "u16"
             }
-          },
-          {
-            "name": "timestamp",
-            "type": {
-              "option": "u64"
-            }
           }
         ]
       }
@@ -437,12 +747,16 @@ export type PaperFi = {
             "type": "string"
           },
           {
+            "name": "version",
+            "type": "u32"
+          },
+          {
             "name": "owner",
             "type": "pubkey"
           },
           {
-            "name": "reviewStatus",
-            "type": "string"
+            "name": "listed",
+            "type": "bool"
           },
           {
             "name": "price",
@@ -461,12 +775,76 @@ export type PaperFi = {
             "type": "u32"
           },
           {
+            "name": "reviewStatus",
+            "type": {
+              "defined": {
+                "name": "reviewStatus"
+              }
+            }
+          },
+          {
             "name": "sales",
             "type": "u32"
           },
           {
             "name": "timestamp",
-            "type": "i64"
+            "type": "u64"
+          },
+          {
+            "name": "paperUri",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "review",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "paper",
+            "type": "pubkey"
+          },
+          {
+            "name": "verdict",
+            "type": {
+              "defined": {
+                "name": "verdict"
+              }
+            }
+          },
+          {
+            "name": "timestamp",
+            "type": "u64"
+          },
+          {
+            "name": "reviewUri",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "reviewStatus",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "approved",
+            "type": "u32"
+          },
+          {
+            "name": "rejected",
+            "type": "u32"
+          },
+          {
+            "name": "reviewRequested",
+            "type": "u32"
           }
         ]
       }
@@ -515,6 +893,23 @@ export type PaperFi = {
           {
             "name": "timestamp",
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "verdict",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "approved"
+          },
+          {
+            "name": "rejected"
+          },
+          {
+            "name": "reviewRequested"
           }
         ]
       }

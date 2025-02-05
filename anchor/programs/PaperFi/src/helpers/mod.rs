@@ -34,5 +34,30 @@ pub struct EditUserParams {
     pub purchases: Option<u16>,
     pub papers: Option<u16>,
     pub reviews: Option<u16>,
-    pub timestamp: Option<u64>,
+}
+
+#[derive(AnchorSerialize, AnchorDeserialize)]
+pub struct EditPaperParams {
+    pub authors: Option<String>,
+    pub title: Option<String>,
+    pub intro: Option<String>,
+    pub listed: Option<bool>,
+    pub price: Option<u16>,
+    pub reviews: Option<u32>,
+    pub sales: Option<u32>,
+    pub version: Option<u32>,
+    pub paper_uri: Option<String>,
+}
+
+// --------------------- ENUMS ----------------------
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
+pub enum Verdict {
+    Approved,
+    Rejected,
+    ReviewRequested,
+}
+
+impl Space for Verdict {
+    const INIT_SPACE: usize = 1; // 1 byte is enough for an enum with <= 256 variants
 }
