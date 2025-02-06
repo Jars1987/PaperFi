@@ -64,9 +64,14 @@ pub mod PaperFi {
     }
 
     /*
-    // edit review as the reviewer might want to change is review.
+    1 - Update Diagrams acording to new changes in code. Introduction of URI, State changes, 
+      - change price to u64 cause that what CPI uses (lamports?), 
+      - use bumps stored in states when deriving accounts in the context
+      - check if seeds make sense
+      - Use uncheked accoutns or SystemAccount when having 2 accounts (user owner of the paper and user owner of the review)
+    2-  edit review as the reviewer might want to change is review.
 
-      //Buy Paper - PaperOwned PDA created, get account from Discriminator and Buyer Publickey, get the file decrypted in the Front End
+    3-  //Buy Paper - PaperOwned PDA created, get account from Discriminator and Buyer Publickey, get the file decrypted in the Front End
     pub fn buy_paper(context: Context<BuyPaper>) -> Result<()> {
         //TODO
         Ok(())

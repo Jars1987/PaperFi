@@ -63,7 +63,7 @@ impl ReviewStatus {
         }
     }
 
-    //should I had "Review Requested" too?
+    //should I add "Review Requested" too?
     pub fn rejection_ratio(&self) -> f32 {
         if self.rejected + self.approved == 0 {
             0.0
