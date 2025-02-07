@@ -1,7 +1,8 @@
 use anchor_lang::prelude::*;
-
+use regex::Regex;
 use crate::state::{ Paper, UserAccount, ReviewStatus };
 use crate::errors::ErrorCode;
+use crate::{ validate_no_emojis };
 
 #[derive(Accounts)]
 #[instruction(id: u64)]
@@ -9,14 +10,14 @@ pub struct NewPaper<'info> {
     #[account(mut)]
     pub owner: Signer<'info>,
 
-    #[account(seeds = [b"user", owner.key().as_ref()], bump = user_account.bump)]
+    #[account(mut, seeds = [b"user", owner.key().as_ref()], bump = user_account.bump)]
     pub user_account: Account<'info, UserAccount>,
 
     #[account(
         init,
         payer = owner,
         space = Paper::INIT_SPACE,
-        seeds = [b"paper", user_account.key().as_ref(), &id.to_le_bytes()],
+        seeds = [b"paper", owner.key().as_ref(), &id.to_le_bytes()], // ** Check foot notes
         bump
     )]
     pub paper: Account<'info, Paper>,
@@ -35,15 +36,20 @@ impl<'info> NewPaper<'info> {
         uri: String,
         bump: &NewPaperBumps
     ) -> Result<()> {
+        validate_no_emojis!(&title);
+        validate_no_emojis!(&authors);
+        validate_no_emojis!(&intro);
+
         //SafeGuards for max length of Strings, price >= 0
         // TODO
 
-        //default eview status
+        //default Review status
         let review_status = ReviewStatus {
             approved: 0,
             rejected: 0,
             review_requested: 0,
         };
+
         //set paper
         self.paper.set_inner(Paper {
             authors,
@@ -52,7 +58,7 @@ impl<'info> NewPaper<'info> {
             owner: self.user_account.key(),
             review_status,
             version: 1,
-            listed: true, //Should it be listed before review? to differentiate?
+            listed: true,
             price,
             bump: bump.paper,
             user_bump: self.user_account.bump, //looks like anchor does not track the bumps if we derivate the bump from state in the context accounts
@@ -61,6 +67,17 @@ impl<'info> NewPaper<'info> {
             timestamp: Clock::get().unwrap().unix_timestamp as u64,
             paper_uri: uri,
         });
+
+        self.user_account.papers += 1;
+        self.user_account.timestamp = Clock::get()?.unix_timestamp as u64;
+
         Ok(())
     }
 }
+
+/*
+//---Foot notes---
+
+1- We could use the title argument passed from the instructions and use it as seed: &title.as_bytes()[..title.len().min(32) but the owner might want to change the title 
+
+*/

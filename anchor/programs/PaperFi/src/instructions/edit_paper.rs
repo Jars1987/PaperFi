@@ -1,7 +1,6 @@
 use anchor_lang::prelude::*;
 
-use crate::state::{ Paper, UserAccount };
-use crate::errors::ErrorCode;
+use crate::state::{ Paper };
 use crate::helpers::*;
 
 #[derive(Accounts)]
@@ -10,12 +9,9 @@ pub struct EditPaper<'info> {
     #[account(mut)]
     pub owner: Signer<'info>,
 
-    #[account(seeds = [b"user", owner.key().as_ref()], bump = paper.user_bump)]
-    pub user: Account<'info, UserAccount>,
-
     #[account(
     mut,
-    seeds = [b"paper", user.key().as_ref(), &id.to_le_bytes()],
+    seeds = [b"paper", owner.key().as_ref(), &id.to_le_bytes()],
     bump = paper.bump
 )]
     pub paper: Account<'info, Paper>,

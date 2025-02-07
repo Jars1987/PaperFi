@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-use crate::state::{ UserAccount, Paper, Review, ReviewStatus };
+use crate::state::{ UserAccount, Paper, Review };
 use crate::errors::ErrorCode;
 use crate::helpers::*;
 
@@ -26,7 +26,7 @@ pub struct ReviewPaper<'info> {
 
     #[account(
     mut,
-    seeds = [b"paper", user_account.key().as_ref(), &id.to_le_bytes()],
+    seeds = [b"paper", paper.owner.key().as_ref(), &id.to_le_bytes()],
     bump = paper.bump
 )]
     pub paper: Account<'info, Paper>,
@@ -46,6 +46,8 @@ pub struct ReviewPaper<'info> {
 impl<'info> ReviewPaper<'info> {
     //When selecting the paper to review, the client has the PDA info
     pub fn review_paper(&mut self, id: u64, verdict: Verdict, uri: String) -> Result<()> {
+        //Add safeguard about owner and reviewr being the same as owner can't review own papers
+
         let time = Clock::get()?.unix_timestamp as u64;
         //create review
         self.review.set_inner(Review {
@@ -60,10 +62,10 @@ impl<'info> ReviewPaper<'info> {
         let paper = &mut self.paper;
         paper.reviews += 1;
         paper.timestamp = time;
-        paper.review_status.update(verdict);
+        paper.review_status.update(&verdict);
 
         // Check rejection ratio - set to 20% for now
-        if paper.review_status.rejection_ratio() > 0.2 {
+        if paper.review_status.rejection_ratio() > 20 {
             paper.listed = false;
         }
 

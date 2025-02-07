@@ -4,6 +4,10 @@ pub mod edit_user;
 pub mod new_paper;
 pub mod edit_paper;
 pub mod review_paper;
+pub mod edit_review;
+pub mod buy_paper;
+pub mod user_withdraw;
+pub mod admin_withdraw;
 
 pub use initialize::*;
 pub use new_user::*;
@@ -11,3 +15,7 @@ pub use edit_user::*;
 pub use new_paper::*;
 pub use edit_paper::*;
 pub use review_paper::*;
+pub use edit_review::*;
+pub use buy_paper::*;
+pub use user_withdraw::*;
+pub use admin_withdraw::*;

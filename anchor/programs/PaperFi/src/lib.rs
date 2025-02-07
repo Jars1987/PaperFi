@@ -63,23 +63,31 @@ pub mod PaperFi {
         Ok(())
     }
 
-    /*
-    1 - Update Diagrams acording to new changes in code. Introduction of URI, State changes, ID passed in instructions to allow unique papers
-      - use bumps stored in states when deriving accounts in the context
-      - check if seeds make sense
-      - Use uncheked accoutns or SystemAccount when having 2 accounts (user owner of the paper and user owner of the review)
-    2-  edit review as the reviewer might want to change is review.
+    pub fn edit_review(context: Context<EditReview>, id: u64, verdict: Verdict) -> Result<()> {
+        context.accounts.edit_review(id, verdict)?;
+        Ok(())
+    }
 
-    3-  //Buy Paper - PaperOwned PDA created, get account from Discriminator and Buyer Publickey, get the file decrypted in the Front End
+    //Buy Paper - PaperOwned PDA created, get account from Discriminator and Buyer Publickey, get the file decrypted in the Front End
     pub fn buy_paper(context: Context<BuyPaper>) -> Result<()> {
-        //TODO
+        context.accounts.buy_paper(&context.bumps)?;
         Ok(())
     }
 
-      //pub fn withdraw_funds(context: Context<Withdraw>) -> Result<()> {
-        //TODO
+    pub fn user_withdraw(context: Context<UserWithdraw>, vault_bump: u8) -> Result<()> {
+        context.accounts.user_withdraw(vault_bump)?;
         Ok(())
     }
+
+    pub fn admin_withdraw(context: Context<AdminWithdraw>, admin_vault_bump: u8) -> Result<()> {
+        context.accounts.admin_withdraw(admin_vault_bump)?;
+        Ok(())
+    }
+
+    /*
+
+    //TODO NEXT WEEK:
+    // Add Safeguards to all instruction
 
     //Mint NFT Badge
     pub fn mint_badge(context: Context<MintBadge>) -> Result<()> {
@@ -87,22 +95,29 @@ pub mod PaperFi {
         Ok(())
     }
 
+    //Happy test and Unhappy test
+
     */
 }
 
 /* ------------------ FUTURE IMPLEMENTATIONS --------------------------
 
+Considerations:
 - Should we make the review mandatory before listing like any other ResearchHub?
 - Consider if a Paper is rejected how will we notify those that already bought
 - Consider that if a paper is requested to be reviewed/changed how will notify the current paper owners to re-download and check changes.
 - Consider changing the Paper State to include Paper Changes Log. (maybe doing this off chain)
 
-
+Next Features:
+- Consider adding Co-authors pubkeys to the Paper State:
+    -> User Publishing add list of pubkeys ( Paper state co_authors_accounts)
+    -> User Dashboard get a note saying he has been taged as Paper Co-author and he signs the tx that confirms being a co-author
+    -> Paper state saves Verified co_authors: Vec<Pubkeys> (?)
 - Mint an SPL to work as the Token for the Platform
 - Everyone is given 1 Token for free when Signing Up
 - Reviewers are rewarded with SPL Tokens
 - Tokens will have a Pool but can also be used to Purchase Papers
-- Tokens can be spend to use additional features (Hire someone specifically to review Paper, Job Posting, Fund raising)
+- Tokens can be spent on additional features (Hire someone specifically to review Paper, Job Posting, Fund raising)
 - Implement a Token Swap in the platform
 - Allow research centers/institutions to launch IDOs (decentralized ICOs).
 */

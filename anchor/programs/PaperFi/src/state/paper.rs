@@ -39,17 +39,17 @@ impl Space for Paper {
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Default)]
 pub struct ReviewStatus {
-    pub approved: u32,
-    pub rejected: u32,
-    pub review_requested: u32,
+    pub approved: i64,
+    pub rejected: i64,
+    pub review_requested: i64,
 }
 
 impl anchor_lang::Space for ReviewStatus {
-    const INIT_SPACE: usize = 4 * 3; // Three u32 fields (each 4 bytes)
+    const INIT_SPACE: usize = 8 * 3; // Three u32 fields (each 4 bytes)
 }
 
 impl ReviewStatus {
-    pub fn update(&mut self, verdict: Verdict) {
+    pub fn update(&mut self, verdict: &Verdict) {
         match verdict {
             Verdict::Approved => {
                 self.approved += 1;
@@ -63,12 +63,15 @@ impl ReviewStatus {
         }
     }
 
-    //should I add "Review Requested" too?
-    pub fn rejection_ratio(&self) -> f32 {
+    //should I add "Review Requested" too? For now math
+    pub fn rejection_ratio(&self) -> i64 {
         if self.rejected + self.approved == 0 {
-            0.0
-        } else {
-            (self.rejected as f32) / ((self.rejected + self.approved) as f32)
+            0;
         }
+        let denominator = self.rejected + self.approved;
+        let ratio = self.rejected.checked_div(denominator).unwrap_or(0); // If division fails, return 0
+
+        // Multiply the result by 100 to convert it to a percentage
+        ratio * 100
     }
 }

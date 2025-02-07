@@ -14,25 +14,84 @@ export type PaperFi = {
   },
   "instructions": [
     {
-      "name": "editPaper",
+      "name": "adminWithdraw",
       "discriminator": [
-        239,
-        7,
-        31,
-        141,
-        211,
-        193,
-        82,
-        211
+        160,
+        166,
+        147,
+        222,
+        46,
+        220,
+        75,
+        224
       ],
       "accounts": [
         {
-          "name": "owner",
+          "name": "admin",
           "writable": true,
           "signer": true
         },
         {
-          "name": "user",
+          "name": "adminVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  100,
+                  109,
+                  105,
+                  110,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "admin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "adminVaultBump",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "buyPaper",
+      "discriminator": [
+        5,
+        194,
+        65,
+        179,
+        131,
+        106,
+        145,
+        217
+      ],
+      "accounts": [
+        {
+          "name": "buyer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "buyerUserAccount",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -46,7 +105,105 @@ export type PaperFi = {
               },
               {
                 "kind": "account",
-                "path": "owner"
+                "path": "buyer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "userAccount",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "paper.owner",
+                "account": "paper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "userVault",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "paper.owner",
+                "account": "paper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  100,
+                  109,
+                  105,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "admin.owner",
+                "account": "admin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "adminVault",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  100,
+                  109,
+                  105,
+                  110,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "admin"
               }
             ]
           }
@@ -68,7 +225,88 @@ export type PaperFi = {
               },
               {
                 "kind": "account",
-                "path": "user"
+                "path": "paper.owner",
+                "account": "paper"
+              },
+              {
+                "kind": "arg",
+                "path": "id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "paperOwned",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  117,
+                  114,
+                  99,
+                  104,
+                  97,
+                  115,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              },
+              {
+                "kind": "account",
+                "path": "paper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "editPaper",
+      "discriminator": [
+        239,
+        7,
+        31,
+        141,
+        211,
+        193,
+        82,
+        211
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "paper",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
               },
               {
                 "kind": "arg",
@@ -92,6 +330,97 @@ export type PaperFi = {
           "type": {
             "defined": {
               "name": "editPaperParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "editReview",
+      "discriminator": [
+        9,
+        148,
+        111,
+        178,
+        12,
+        245,
+        91,
+        166
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "paper",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "paper.owner",
+                "account": "paper"
+              },
+              {
+                "kind": "arg",
+                "path": "id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "review",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  105,
+                  101,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "paper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": "u64"
+        },
+        {
+          "name": "verdict",
+          "type": {
+            "defined": {
+              "name": "verdict"
             }
           }
         }
@@ -162,7 +491,7 @@ export type PaperFi = {
       ],
       "accounts": [
         {
-          "name": "maker",
+          "name": "signer",
           "writable": true,
           "signer": true
         },
@@ -183,7 +512,7 @@ export type PaperFi = {
               },
               {
                 "kind": "account",
-                "path": "maker"
+                "path": "admin"
               }
             ]
           }
@@ -210,7 +539,7 @@ export type PaperFi = {
               },
               {
                 "kind": "account",
-                "path": "maker"
+                "path": "admin"
               }
             ]
           }
@@ -242,6 +571,7 @@ export type PaperFi = {
         },
         {
           "name": "userAccount",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -277,7 +607,7 @@ export type PaperFi = {
               },
               {
                 "kind": "account",
-                "path": "userAccount"
+                "path": "owner"
               },
               {
                 "kind": "arg",
@@ -396,7 +726,8 @@ export type PaperFi = {
               },
               {
                 "kind": "account",
-                "path": "userAccount"
+                "path": "paper.owner",
+                "account": "paper"
               },
               {
                 "kind": "arg",
@@ -536,6 +867,63 @@ export type PaperFi = {
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "userWithdraw",
+      "discriminator": [
+        53,
+        254,
+        26,
+        242,
+        119,
+        237,
+        73,
+        33
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "userVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "vaultBump",
+          "type": "u8"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -563,6 +951,19 @@ export type PaperFi = {
         93,
         63,
         12
+      ]
+    },
+    {
+      "name": "paperOwned",
+      "discriminator": [
+        157,
+        209,
+        35,
+        17,
+        36,
+        57,
+        222,
+        244
       ]
     },
     {
@@ -602,6 +1003,21 @@ export type PaperFi = {
       "code": 6001,
       "name": "fieldIsEmpty",
       "msg": "Must provide a name and a title"
+    },
+    {
+      "code": 6002,
+      "name": "emojisNotAllowed",
+      "msg": "The input string contains emojis, which are not allowed"
+    },
+    {
+      "code": 6003,
+      "name": "mathOverflow",
+      "msg": "Something went wrong. Mathoverflow!"
+    },
+    {
+      "code": 6004,
+      "name": "insufficientFunds",
+      "msg": "Vault is empty"
     }
   ],
   "types": [
@@ -624,6 +1040,10 @@ export type PaperFi = {
           },
           {
             "name": "vaultBump",
+            "type": "u8"
+          },
+          {
+            "name": "fee",
             "type": "u8"
           }
         ]
@@ -798,6 +1218,30 @@ export type PaperFi = {
       }
     },
     {
+      "name": "paperOwned",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "buyer",
+            "type": "pubkey"
+          },
+          {
+            "name": "paper",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
       "name": "review",
       "type": {
         "kind": "struct",
@@ -836,15 +1280,15 @@ export type PaperFi = {
         "fields": [
           {
             "name": "approved",
-            "type": "u32"
+            "type": "i64"
           },
           {
             "name": "rejected",
-            "type": "u32"
+            "type": "i64"
           },
           {
             "name": "reviewRequested",
-            "type": "u32"
+            "type": "i64"
           }
         ]
       }
