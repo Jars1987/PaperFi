@@ -1,5 +1,5 @@
 use anchor_lang::prelude::*;
-use crate::state::User;
+use crate::state::UserAccount;
 use crate::errors::ErrorCode;
 use crate::helpers::*;
 
@@ -11,9 +11,9 @@ pub struct EditUser<'info> {
     #[account(
         mut, 
         seeds = [b"user", owner.key().as_ref()],
-         bump
+         bump = user.bump
         )]
-    pub user: Account<'info, User>,
+    pub user: Account<'info, UserAccount>,
 }
 
 pub fn edit_user(ctx: Context<EditUser>, params: EditUserParams) -> Result<()> {

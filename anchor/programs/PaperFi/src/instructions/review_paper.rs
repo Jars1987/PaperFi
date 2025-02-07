@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-use crate::state::{ User, Paper, Review, ReviewStatus };
+use crate::state::{ UserAccount, Paper, Review, ReviewStatus };
 use crate::errors::ErrorCode;
 use crate::helpers::*;
 
@@ -13,21 +13,21 @@ pub struct ReviewPaper<'info> {
     #[account(
       mut,
       seeds = [b"user", signer.key().as_ref()],
-      bump
+      bump = reviewer_user_account.bump
     )]
-    pub reviewer_user_account: Account<'info, User>, //to review they must sign up and create an account
+    pub reviewer_user_account: Account<'info, UserAccount>, //to review they must sign up and create an account, no need for init_if_needed
 
     #[account(
       mut, 
       seeds = [b"user", paper.owner.key().as_ref()],
-       bump
+       bump = user_account.bump
       )]
-    pub user: Account<'info, User>, //paper owner user account
+    pub user_account: Account<'info, UserAccount>, //paper owner user account
 
     #[account(
     mut,
-    seeds = [b"paper", user.key().as_ref(), &id.to_le_bytes()],
-    bump
+    seeds = [b"paper", user_account.key().as_ref(), &id.to_le_bytes()],
+    bump = paper.bump
 )]
     pub paper: Account<'info, Paper>,
 

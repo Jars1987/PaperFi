@@ -241,7 +241,7 @@ export type PaperFi = {
           "signer": true
         },
         {
-          "name": "user",
+          "name": "userAccount",
           "pda": {
             "seeds": [
               {
@@ -277,7 +277,7 @@ export type PaperFi = {
               },
               {
                 "kind": "account",
-                "path": "user"
+                "path": "userAccount"
               },
               {
                 "kind": "arg",
@@ -310,7 +310,7 @@ export type PaperFi = {
         },
         {
           "name": "price",
-          "type": "u16"
+          "type": "u64"
         },
         {
           "name": "uri",
@@ -358,7 +358,7 @@ export type PaperFi = {
           }
         },
         {
-          "name": "user",
+          "name": "userAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -396,7 +396,7 @@ export type PaperFi = {
               },
               {
                 "kind": "account",
-                "path": "user"
+                "path": "userAccount"
               },
               {
                 "kind": "arg",
@@ -579,16 +579,16 @@ export type PaperFi = {
       ]
     },
     {
-      "name": "user",
+      "name": "userAccount",
       "discriminator": [
-        159,
-        117,
-        95,
-        227,
-        239,
-        151,
-        58,
-        236
+        211,
+        33,
+        136,
+        16,
+        186,
+        110,
+        242,
+        127
       ]
     }
   ],
@@ -661,7 +661,7 @@ export type PaperFi = {
           {
             "name": "price",
             "type": {
-              "option": "u16"
+              "option": "u64"
             }
           },
           {
@@ -760,7 +760,7 @@ export type PaperFi = {
           },
           {
             "name": "price",
-            "type": "u16"
+            "type": "u64"
           },
           {
             "name": "bump",
@@ -850,7 +850,7 @@ export type PaperFi = {
       }
     },
     {
-      "name": "user",
+      "name": "userAccount",
       "type": {
         "kind": "struct",
         "fields": [

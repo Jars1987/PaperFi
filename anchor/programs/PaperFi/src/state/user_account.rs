@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 
 #[account]
-pub struct User {
+pub struct UserAccount {
     pub name: String,
     pub title: String,
     pub purchases: u16,
@@ -16,7 +16,7 @@ pub struct User {
     // institution: String,
 }
 
-impl anchor_lang::Space for User {
+impl anchor_lang::Space for UserAccount {
     const INIT_SPACE: usize =
         8 + // Anchor discriminator
         (48 + 4) + // name (max 48 chars + prefix)

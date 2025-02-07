@@ -5,7 +5,7 @@ use crate::helpers::Verdict;
 pub struct Review {
     pub owner: Pubkey,
     pub paper: Pubkey,
-    pub verdict: Verdict, // Using   the enum here instead of a String
+    pub verdict: Verdict,
     pub timestamp: u64,
     pub review_uri: String,
 }

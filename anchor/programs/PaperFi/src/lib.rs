@@ -41,10 +41,10 @@ pub mod PaperFi {
         authors: String,
         title: String,
         intro: String,
-        price: u16,
+        price: u64,
         uri: String
     ) -> Result<()> {
-        context.accounts.new_paper(id, authors, title, intro, price, uri, context.bumps)?;
+        context.accounts.new_paper(id, authors, title, intro, price, uri, &context.bumps)?;
         Ok(())
     }
 
@@ -64,8 +64,7 @@ pub mod PaperFi {
     }
 
     /*
-    1 - Update Diagrams acording to new changes in code. Introduction of URI, State changes, 
-      - change price to u64 cause that what CPI uses (lamports?), 
+    1 - Update Diagrams acording to new changes in code. Introduction of URI, State changes, ID passed in instructions to allow unique papers
       - use bumps stored in states when deriving accounts in the context
       - check if seeds make sense
       - Use uncheked accoutns or SystemAccount when having 2 accounts (user owner of the paper and user owner of the review)

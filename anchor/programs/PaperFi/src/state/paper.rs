@@ -8,7 +8,7 @@ pub struct Paper {
     pub version: u32,
     pub owner: Pubkey,
     pub listed: bool,
-    pub price: u16,
+    pub price: u64,
     pub bump: u8,
     pub user_bump: u8,
     pub reviews: u32,
@@ -27,7 +27,7 @@ impl Space for Paper {
         4 + // version (u32)
         32 + // owner (Pubkey)
         1 + // listed (bool)
-        2 + // price (u16)
+        8 + // price (u64)
         1 + // bump (u8)
         1 + // user_bump (u8)
         4 + // reviews (u32)

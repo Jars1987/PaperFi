@@ -42,7 +42,7 @@ pub struct EditPaperParams {
     pub title: Option<String>,
     pub intro: Option<String>,
     pub listed: Option<bool>,
-    pub price: Option<u16>,
+    pub price: Option<u64>,
     pub reviews: Option<u32>,
     pub sales: Option<u32>,
     pub version: Option<u32>,

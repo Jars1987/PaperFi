@@ -235,7 +235,7 @@
           "signer": true
         },
         {
-          "name": "user",
+          "name": "user_account",
           "pda": {
             "seeds": [
               {
@@ -271,7 +271,7 @@
               },
               {
                 "kind": "account",
-                "path": "user"
+                "path": "user_account"
               },
               {
                 "kind": "arg",
@@ -304,7 +304,7 @@
         },
         {
           "name": "price",
-          "type": "u16"
+          "type": "u64"
         },
         {
           "name": "uri",
@@ -352,7 +352,7 @@
           }
         },
         {
-          "name": "user",
+          "name": "user_account",
           "writable": true,
           "pda": {
             "seeds": [
@@ -390,7 +390,7 @@
               },
               {
                 "kind": "account",
-                "path": "user"
+                "path": "user_account"
               },
               {
                 "kind": "arg",
@@ -573,16 +573,16 @@
       ]
     },
     {
-      "name": "User",
+      "name": "UserAccount",
       "discriminator": [
-        159,
-        117,
-        95,
-        227,
-        239,
-        151,
-        58,
-        236
+        211,
+        33,
+        136,
+        16,
+        186,
+        110,
+        242,
+        127
       ]
     }
   ],
@@ -655,7 +655,7 @@
           {
             "name": "price",
             "type": {
-              "option": "u16"
+              "option": "u64"
             }
           },
           {
@@ -754,7 +754,7 @@
           },
           {
             "name": "price",
-            "type": "u16"
+            "type": "u64"
           },
           {
             "name": "bump",
@@ -844,7 +844,7 @@
       }
     },
     {
-      "name": "User",
+      "name": "UserAccount",
       "type": {
         "kind": "struct",
         "fields": [
