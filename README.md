@@ -1,94 +1,54 @@
 # PaperFi
 
-## Getting Started
+# Project Overview
 
-### Prerequisites
+## Capstone Project Name/Idea:
 
-- Node v18.18.0 or higher
+PaperFi - Research Paper Finance.
 
-- Rust v1.77.2 or higher
-- Anchor CLI 0.30.1 or higher
-- Solana CLI 1.18.17 or higher
+## Brief Project Description:
 
-### Installation
+PaperFi is a decentralized platform designed to revolutionize academic
+publishing by providing a marketplace where researchers can publish and monetize
+their work without reliance on traditional journals. The papers are published
+on-chain ensuring transparency, secure access through encryption, and
+decentralized storage. Researchers earn revenue directly from paper sales, and
+NFT-based achievement badges incentivize active participation and high-quality
+contributions.
 
-#### Clone the repo
+## Reason for Choosing this Project:
 
-```shell
-git clone <repo-url>
-cd <repo-name>
-```
+PaperFi addresses critical issues in academic publishing, such as monopolization
+by centralized journals that impose high access costs and restrict researchers'
+control over their work. As a pharmacist and blockchain enthusiast, I aim to
+apply the principles of decentralization to make scientific knowledge more
+accessible and empower researchers worldwide.
 
-#### Install Dependencies
+### Target Audience:
 
-```shell
-pnpm install
-```
+The main target are the researchers and academics by serving them with an
+alternative to publishing. Attached to researchers we will have universities,
+research institutions, libraries, and independent learners interested in
+accessing cutting-edge research. Academics are more prone to be onboarded to a
+blockchain like Solana.
 
-#### Start the web app
+## Competitive Landscape
 
-```
-pnpm dev
-```
+### Competitors:
 
-## Apps
+ResearchHub and traditional academic publishers.
 
-### anchor
+### Differentiators:
 
-This is a Solana program written in Rust using the Anchor framework.
+- PDA-based on-chain storage for paper metadata (no limitations on sales).
+- Secure, one-time-use decryption mechanisms for paper access.
+- Peer review functionality with public reviews visible on paper pages.
+- No APC (Article Processing Charges).
+- Achievement badges as NFTs to incentivize contributions.
+- Revenue from direct sales without secondary market dependency.
+- Researchers can pay other renowned researchers or freelancers to review
+  research
+- Teams can hire researchers to do particular research
+- Weekly Newsletter with Research/community updates
 
-#### Commands
-
-You can use any normal anchor commands. Either move to the `anchor` directory and run the `anchor` command or prefix the command with `pnpm`, eg: `pnpm anchor`.
-
-#### Sync the program id:
-
-Running this command will create a new keypair in the `anchor/target/deploy` directory and save the address to the Anchor config file and update the `declare_id!` macro in the `./src/lib.rs` file of the program.
-
-You will manually need to update the constant in `anchor/lib/counter-exports.ts` to match the new program id.
-
-```shell
-pnpm anchor keys sync
-```
-
-#### Build the program:
-
-```shell
-pnpm anchor-build
-```
-
-#### Start the test validator with the program deployed:
-
-```shell
-pnpm anchor-localnet
-```
-
-#### Run the tests
-
-```shell
-pnpm anchor-test
-```
-
-#### Deploy to Devnet
-
-```shell
-pnpm anchor deploy --provider.cluster devnet
-```
-
-### web
-
-This is a React app that uses the Anchor generated client to interact with the Solana program.
-
-#### Commands
-
-Start the web app
-
-```shell
-pnpm dev
-```
-
-Build the web app
-
-```shell
-pnpm build
-```
+![Project Overview](ProjectOverviewLightMode.png)
