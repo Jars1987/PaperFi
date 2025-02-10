@@ -96,8 +96,7 @@ pub mod PaperFi {
     }
 }
 
-/* ------------------ FUTURE IMPLEMENTATIONS --------------------------
-    //Todo:
+/* ------------------ Next Steps --------------------------
     // Add Safeguards to all instruction
     //Happy test and Unhappy test
 
