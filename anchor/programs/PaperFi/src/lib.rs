@@ -21,7 +21,6 @@ pub mod PaperFi {
 
     pub fn initialize(context: Context<Initialize>) -> Result<()> {
         context.accounts.generate_accounts(context.bumps)?;
-        //TODO
         Ok(())
     }
 
@@ -84,25 +83,26 @@ pub mod PaperFi {
         Ok(())
     }
 
-    /*
-
-    //TODO NEXT WEEK:
-    // Add Safeguards to all instruction
-
-    //Mint NFT Badge
-    pub fn mint_badge(context: Context<MintBadge>) -> Result<()> {
-        //TODO
+    //1- First create a collection asset and add Master Edition Plugin
+    pub fn make_badge(context: Context<MakeBadge>, args: CreateBadgeArgs) -> Result<()> {
+        context.accounts.make_badge(args)?;
         Ok(())
     }
 
-    //Happy test and Unhappy test
-
-    */
+    //2- Second create an NFT asset and add the Edition Plugin
+    pub fn mint_achievement_nft(context: Context<PrintBadge>, args: PrintBadgeArgs) -> Result<()> {
+        context.accounts.print_badge(args)?;
+        Ok(())
+    }
 }
 
 /* ------------------ FUTURE IMPLEMENTATIONS --------------------------
+    //Todo:
+    // Add Safeguards to all instruction
+    //Happy test and Unhappy test
 
 Considerations:
+- Verify Badges needs to be done in the client --> https://developers.metaplex.com/core/plugins/verified-creators
 - Should we make the review mandatory before listing like any other ResearchHub?
 - Consider if a Paper is rejected how will we notify those that already bought
 - Consider that if a paper is requested to be reviewed/changed how will notify the current paper owners to re-download and check changes.

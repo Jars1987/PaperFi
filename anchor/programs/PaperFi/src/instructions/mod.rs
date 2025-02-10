@@ -8,6 +8,8 @@ pub mod edit_review;
 pub mod buy_paper;
 pub mod user_withdraw;
 pub mod admin_withdraw;
+pub mod make_badge;
+pub mod print_badge;
 
 pub use initialize::*;
 pub use new_user::*;
@@ -19,3 +21,5 @@ pub use edit_review::*;
 pub use buy_paper::*;
 pub use user_withdraw::*;
 pub use admin_withdraw::*;
+pub use make_badge::*;
+pub use print_badge::*;

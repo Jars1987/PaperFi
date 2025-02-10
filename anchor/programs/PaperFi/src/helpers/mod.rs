@@ -20,6 +20,35 @@ macro_rules! validate_no_emojis {
     };
 }
 
+#[macro_export]
+macro_rules! check_user_achievement {
+    ($user_account:expr, $name:expr, $record:expr) => {
+        match $name.as_str() {
+            "papers" => {
+                require!(
+                    $user_account.papers >= $record,
+                    ErrorCode::InvalidAchievement
+                );
+            }
+            "reviews" => {
+                require!(
+                    $user_account.reviews >= $record,
+                    ErrorCode::InvalidAchievement
+                );
+            }
+            "purchases" => {
+                require!(
+                    $user_account.purchases >= $record,
+                    ErrorCode::InvalidAchievement
+                );
+            }
+            _ => {
+                return Err(ErrorCode::UnknownBadge.into());
+            }
+        }
+    };
+}
+
 // -------------  Helper functions ---------------
 pub fn update_field(field: &mut String, new_value: Option<String>, max_len: usize) -> Result<()> {
     match new_value {
@@ -50,9 +79,24 @@ pub fn update_numeric_field<T: Copy>(field: &mut T, new_value: Option<T>) -> Res
 pub struct EditUserParams {
     pub name: Option<String>,
     pub title: Option<String>,
-    pub purchases: Option<u16>,
-    pub papers: Option<u16>,
-    pub reviews: Option<u16>,
+    pub purchases: Option<u32>,
+    pub papers: Option<u32>,
+    pub reviews: Option<u32>,
+}
+
+#[derive(AnchorDeserialize, AnchorSerialize)]
+pub struct CreateBadgeArgs {
+    pub name: String,
+    pub uri: String,
+}
+
+#[derive(AnchorDeserialize, AnchorSerialize)]
+pub struct PrintBadgeArgs {
+    pub name: String,
+    pub uri: String,
+    pub achievement: String,
+    pub record: u32,
+    pub timestamp: u64,
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize)]
