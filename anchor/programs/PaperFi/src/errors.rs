@@ -20,4 +20,6 @@ pub enum ErrorCode {
     UnknownBadge,
     #[msg("Max Admins allowed have been reached")]
     TooManyAdmins,
+    #[msg("Prince can't be negative")]
+    IncorrectPricing,
 }

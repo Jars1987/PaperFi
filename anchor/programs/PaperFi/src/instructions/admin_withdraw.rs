@@ -22,7 +22,9 @@ impl<'info> AdminWithdraw<'info> {
         require!(self.config.admins.contains(&self.admin.key()), ErrorCode::Unauthorized);
 
         let vault_balance = self.config_vault.lamports();
+
         require!(vault_balance > 0, ErrorCode::InsufficientFunds);
+
         let config_seed = self.config.key();
         let seeds = &[b"config_vault", config_seed.as_ref(), &[self.config.vault_bump]];
         let signer_seeds = &[&seeds[..]];

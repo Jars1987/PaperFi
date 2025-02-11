@@ -17,8 +17,6 @@ declare_id!("coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF");
 pub mod PaperFi {
     use super::*;
 
-    // TODO - make sure we are using a pda to create admin accounts we need to make sure only the program creates vaults, accounts and moves funds
-
     pub fn initialize(context: Context<Initialize>) -> Result<()> {
         context.accounts.generate_accounts(context.bumps)?;
         Ok(())
@@ -106,10 +104,7 @@ Considerations:
 - Consider changing the Paper State to include Paper Changes Log. (maybe doing this off chain)
 
 Next Features:
-- Consider adding Co-authors pubkeys to the Paper State:
-    -> User Publishing add list of pubkeys ( Paper state co_authors_accounts)
-    -> User Dashboard get a note saying he has been taged as Paper Co-author and he signs the tx that confirms being a co-author
-    -> Paper state saves Verified co_authors: Vec<Pubkeys> (?)
+- Paper sales shared with Co-authors pubkeys
 - Mint an SPL to work as the Token for the Platform
 - Everyone is given 1 Token for free when Signing Up
 - Reviewers are rewarded with SPL Tokens

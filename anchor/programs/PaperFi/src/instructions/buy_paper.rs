@@ -14,26 +14,26 @@ pub struct BuyPaper<'info> {
       seeds = [b"user", buyer.key().as_ref()],
       bump = buyer_user_account.bump
     )]
-    pub buyer_user_account: Account<'info, UserAccount>, //already init, to use the platform must signup there fore user already exists
+    pub buyer_user_account: Box<Account<'info, UserAccount>>, //already init, to use the platform must signup therefore user already exists
 
     #[account(mut, seeds = [b"user", paper.owner.key().as_ref()], bump = user_account.bump)]
-    pub user_account: Account<'info, UserAccount>, //user owner might change this to
+    pub user_account: Box<Account<'info, UserAccount>>, //paper owner user account
 
     #[account(seeds = [b"user_vault", paper.owner.key().as_ref()], bump)]
-    pub user_vault: SystemAccount<'info>,
+    pub user_vault: Box<SystemAccount<'info>>,
 
     #[account(seeds = [b"paperfi_config"], bump = config.bump)]
-    pub config: Account<'info, PaperFiConfig>,
+    pub config: Box<Account<'info, PaperFiConfig>>,
 
     #[account(seeds = [b"config_vault", config.key().as_ref()], bump)]
-    pub config_vault: SystemAccount<'info>,
+    pub config_vault: Box<SystemAccount<'info>>,
 
     #[account(
       mut,
         seeds = [b"paper", paper.owner.key().as_ref(), &id.to_le_bytes()], // ** Check foot notes
         bump
     )]
-    pub paper: Account<'info, Paper>,
+    pub paper: Box<Account<'info, Paper>>,
 
     #[account(
         init,
@@ -67,7 +67,6 @@ impl<'info> BuyPaper<'info> {
 
             let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
 
-            //need to make sure that price is u64 and in lamports
             transfer(cpi_ctx, self.paper.price)?;
 
             //get fee percentage

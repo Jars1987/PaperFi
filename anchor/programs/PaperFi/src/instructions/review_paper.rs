@@ -46,7 +46,8 @@ pub struct ReviewPaper<'info> {
 impl<'info> ReviewPaper<'info> {
     //When selecting the paper to review, the client has the PDA info
     pub fn review_paper(&mut self, id: u64, verdict: Verdict, uri: String) -> Result<()> {
-        //Add safeguard about owner and reviewr being the same as owner can't review own papers
+        //Paper owners can't review own papers
+        require!(self.paper.owner.key() != self.signer.key(), ErrorCode::Unauthorized);
 
         let time = Clock::get()?.unix_timestamp as u64;
         //create review
@@ -61,7 +62,7 @@ impl<'info> ReviewPaper<'info> {
         //update paper state
         let paper = &mut self.paper;
         paper.reviews += 1;
-        paper.timestamp = time;
+        paper.timestamp = time.clone();
         paper.review_status.update(&verdict);
 
         // Check rejection ratio - set to 20% for now

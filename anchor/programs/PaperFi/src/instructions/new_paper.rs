@@ -38,8 +38,8 @@ impl<'info> NewPaper<'info> {
         validate_no_emojis!(&paper_info_url);
         validate_no_emojis!(&uri);
 
-        //SafeGuards for max length of Strings, price >= 0
-        // TODO
+        //Ensure price is either free (0) or in minimum lamports (0.001 Sol)
+        require!(price == 0 || price >= 1_000_000, ErrorCode::IncorrectPricing);
 
         //default Review status
         let review_status = ReviewStatus {
