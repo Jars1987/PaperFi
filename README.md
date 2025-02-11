@@ -50,5 +50,3 @@ ResearchHub and traditional academic publishers.
   research
 - Teams can hire researchers to do particular research
 - Weekly Newsletter with Research/community updates
-
-![Project Overview](ProjectOverviewLightMode.png)

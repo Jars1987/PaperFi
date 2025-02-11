@@ -78,8 +78,8 @@ pub mod PaperFi {
         Ok(())
     }
 
-    pub fn admin_withdraw(context: Context<AdminWithdraw>, admin_vault_bump: u8) -> Result<()> {
-        context.accounts.admin_withdraw(admin_vault_bump)?;
+    pub fn admin_withdraw(context: Context<AdminWithdraw>) -> Result<()> {
+        context.accounts.admin_withdraw()?;
         Ok(())
     }
 

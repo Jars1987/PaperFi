@@ -22,15 +22,10 @@ pub struct EditPaper<'info> {
 impl<'info> EditPaper<'info> {
     pub fn edit_paper(&mut self, id: u64, params: EditPaperParams) -> Result<()> {
         let paper = &mut self.paper;
-        update_field(&mut paper.authors, params.authors, 100)?;
-        update_field(&mut paper.title, params.title, 150)?;
-        update_field(&mut paper.intro, params.intro, 5000)?;
+        update_field(&mut paper.intro, params.paper_info_url, 200)?;
         update_field(&mut paper.paper_uri, params.paper_uri, 200)?;
-
         update_numeric_field(&mut paper.price, params.price)?;
-        update_numeric_field(&mut paper.reviews, params.reviews)?;
         update_numeric_field(&mut paper.version, params.version)?;
-        update_numeric_field(&mut paper.sales, params.sales)?;
 
         match params.listed {
             Some(listed) => {

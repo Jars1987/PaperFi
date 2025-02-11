@@ -35,7 +35,6 @@ impl<'info> NewUser<'info> {
             papers: 0,
             reviews: 0,
             owner: self.signer.key(),
-            vault: self.user_vault.key(),
             bump: bumps.user,
             vault_bump: bumps.user_vault,
             timestamp: Clock::get()?.unix_timestamp as u64,

@@ -29,16 +29,14 @@ impl<'info> NewPaper<'info> {
     pub fn new_paper(
         &mut self,
         id: u64,
-        authors: String,
-        title: String,
-        intro: String,
+        paper_info_url: String,
         price: u64,
         uri: String,
         bump: &NewPaperBumps
     ) -> Result<()> {
-        validate_no_emojis!(&title);
-        validate_no_emojis!(&authors);
-        validate_no_emojis!(&intro);
+        //Is this safeguard needed?
+        validate_no_emojis!(&paper_info_url);
+        validate_no_emojis!(&uri);
 
         //SafeGuards for max length of Strings, price >= 0
         // TODO
@@ -52,9 +50,7 @@ impl<'info> NewPaper<'info> {
 
         //set paper
         self.paper.set_inner(Paper {
-            authors,
-            title,
-            intro,
+            paper_info_url,
             owner: self.user_account.key(),
             review_status,
             version: 1,

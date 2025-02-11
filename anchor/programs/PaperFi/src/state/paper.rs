@@ -2,9 +2,7 @@ use anchor_lang::prelude::*;
 use crate::helpers::Verdict;
 #[account]
 pub struct Paper {
-    pub authors: String,
-    pub title: String,
-    pub intro: String, //looks like abstract is a reserved word
+    pub paper_info_url: String,
     pub version: u32,
     pub owner: Pubkey,
     pub listed: bool,
@@ -21,9 +19,7 @@ pub struct Paper {
 impl Space for Paper {
     const INIT_SPACE: usize =
         8 + // Anchor discriminator
-        (100 + 4) + // authors (max 100 chars + prefix)
-        (150 + 4) + // title (max 150 chars + prefix)
-        (5000 + 4) + // intro (max 5000 chars + prefix)
+        (200 + 4) + // URI/API Code (max 200 chars + prefix)
         4 + // version (u32)
         32 + // owner (Pubkey)
         1 + // listed (bool)

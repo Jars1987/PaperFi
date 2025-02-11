@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 use anchor_lang::system_program::{ transfer, Transfer };
-use crate::state::{ Paper, UserAccount, PaperOwned, Admin };
+use crate::state::{ Paper, UserAccount, PaperOwned, PaperFiConfig };
 use crate::errors::ErrorCode;
 
 #[derive(Accounts)]
@@ -17,16 +17,16 @@ pub struct BuyPaper<'info> {
     pub buyer_user_account: Account<'info, UserAccount>, //already init, to use the platform must signup there fore user already exists
 
     #[account(mut, seeds = [b"user", paper.owner.key().as_ref()], bump = user_account.bump)]
-    pub user_account: Account<'info, UserAccount>,
+    pub user_account: Account<'info, UserAccount>, //user owner might change this to
 
     #[account(seeds = [b"user_vault", paper.owner.key().as_ref()], bump)]
     pub user_vault: SystemAccount<'info>,
 
-    #[account(seeds = [b"admin", admin.owner.key().as_ref()], bump)]
-    pub admin: Account<'info, Admin>,
+    #[account(seeds = [b"paperfi_config"], bump = config.bump)]
+    pub config: Account<'info, PaperFiConfig>,
 
-    #[account(seeds = [b"admin_vault", admin.key().as_ref()], bump)] //do I need the vault account?
-    pub admin_vault: SystemAccount<'info>,
+    #[account(seeds = [b"config_vault", config.key().as_ref()], bump)]
+    pub config_vault: SystemAccount<'info>,
 
     #[account(
       mut,
@@ -72,14 +72,14 @@ impl<'info> BuyPaper<'info> {
 
             //Calculate price of fees and transfer fee from buyer to admin vault
             let total_amout = self.paper.price
-                .checked_mul(100u64 + (self.admin.fee as u64))
+                .checked_mul(100u64 + (self.config.fee as u64))
                 .ok_or(ErrorCode::MathOverflow)?;
 
             let fee_amout = total_amout.checked_div(100).ok_or(ErrorCode::MathOverflow)?;
 
             let cpi_accounts_2 = Transfer {
                 from: self.buyer.to_account_info(),
-                to: self.admin_vault.to_account_info(),
+                to: self.config_vault.to_account_info(),
             };
 
             let cpi_ctx_2 = CpiContext::new(self.system_program.to_account_info(), cpi_accounts_2);
@@ -96,3 +96,11 @@ impl<'info> BuyPaper<'info> {
         Ok(())
     }
 }
+
+/*
+Note:
+
+In future instead of using the Owner in the Paper PDA we can provide a list of the co-authors in the instructions, 
+verify that they are indeed co-authors through Author Paper account verification and share the sell percentage through
+all the user accounts verified
+*/

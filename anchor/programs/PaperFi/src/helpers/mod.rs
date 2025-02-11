@@ -101,9 +101,7 @@ pub struct PrintBadgeArgs {
 
 #[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct EditPaperParams {
-    pub authors: Option<String>,
-    pub title: Option<String>,
-    pub intro: Option<String>,
+    pub paper_info_url: Option<String>,
     pub listed: Option<bool>,
     pub price: Option<u64>,
     pub reviews: Option<u32>,

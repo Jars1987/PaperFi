@@ -49,7 +49,9 @@ blockchain events to showcase PaperFi and onboard users.
 
 ## Competitive Landscape
 
-### Competitors: ResearchHub, traditional academic publishers.
+### Competitors:
+
+ResearchHub and traditional academic publishers.
 
 ### Differentiators:
 

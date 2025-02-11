@@ -8,7 +8,6 @@ pub struct UserAccount {
     pub papers: u32, //published
     pub reviews: u32,
     pub owner: Pubkey,
-    pub vault: Pubkey,
     pub bump: u8,
     pub vault_bump: u8,
     pub timestamp: u64,

@@ -1,5 +1,5 @@
 use anchor_lang::prelude::*;
-use crate::state::{ Admin, PaperFiConfig };
+use crate::state::{ PaperFiConfig };
 use crate::errors::ErrorCode;
 
 #[derive(Accounts)]
@@ -7,17 +7,8 @@ pub struct Initialize<'info> {
     #[account(mut)]
     pub admin: Signer<'info>,
 
-    #[account(
-        init,
-        payer = admin,
-        space = 8 + Admin::INIT_SPACE,
-        seeds = [b"admin", admin.key().as_ref()],
-        bump
-    )]
-    pub admin_account: Account<'info, Admin>,
-
-    #[account(seeds = [b"admin_vault", admin.key().as_ref()], bump)]
-    pub admin_vault: SystemAccount<'info>,
+    #[account(seeds = [b"config_vault", config.key().as_ref()], bump)]
+    pub config_vault: SystemAccount<'info>,
 
     #[account(
         init_if_needed,
@@ -43,13 +34,12 @@ impl<'info> Initialize<'info> {
             config.admins.push(self.admin.key());
         }
 
-        self.admin_account.set_inner(Admin {
-            owner: self.admin.key(),
-            vault: self.admin_vault.key(),
-            bump: bumps.admin_account,
-            vault_bump: bumps.admin_vault,
-            fee: 2, //default valuee is going to be 2%, we might want to implement a feature to change the fee later
-        });
+        if !config.fee {
+            config.fee;
+            config.bump = bumps.config;
+            config.vault_bumpp = bumps.config_vault;
+        }
+
         Ok(())
     }
 }
