@@ -14,7 +14,7 @@ use mpl_core::{
         MasterEdition,
     },
 };
-use crate::state::{ Admin, PaperFiConfig };
+use crate::state::{ PaperFiConfig };
 use crate::errors::ErrorCode;
 use crate::helpers::*;
 
@@ -24,15 +24,14 @@ pub struct MakeBadge<'info> {
     #[account(mut)]
     pub admin: Signer<'info>,
 
-    //I want this to be our update authority
-    #[account(mut, seeds = [b"admin", admin.key().as_ref()], bump = admin_account.bump)]
-    pub admin_account: Account<'info, Admin>,
-
+    //Our update authority
     #[account(seeds = [b"paperfi_config"], bump = config.bump)]
     pub config: Account<'info, PaperFiConfig>,
 
+    //will be transformed into a Core Collection Account during this instruction.
+
     #[account(mut)]
-    pub badge: Signer<'info>, //will be transformed into a Core Collection Account during this instruction.
+    pub badge: Signer<'info>,
 
     #[account(address = MPL_CORE_ID)]
     /// CHECK: this account is checked by the address constraint
@@ -83,7 +82,7 @@ impl<'info> MakeBadge<'info> {
         CreateCollectionV2CpiBuilder::new(&self.mpl_core_program.to_account_info())
             .collection(&self.badge.to_account_info())
             .payer(&self.admin.to_account_info())
-            .update_authority(Some(&self.admin_account.as_ref()))
+            .update_authority(Some(&self.config.as_ref()))
             .system_program(&self.system_program.to_account_info())
             .name(args.name)
             .uri(args.uri)

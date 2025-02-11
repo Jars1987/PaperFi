@@ -3,9 +3,9 @@ use anchor_lang::prelude::*;
 #[account]
 pub struct PaperFiConfig {
     pub admins: Vec<Pubkey>, // Max 3 admins
-    pub fee: u8,
+    pub fee: Option<u8>, //to be able to check if it is set
     pub bump: u8,
-    pub vault_bump,
+    pub vault_bump: u8,
 }
 
 impl PaperFiConfig {

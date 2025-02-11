@@ -22,7 +22,7 @@ pub struct EditPaper<'info> {
 impl<'info> EditPaper<'info> {
     pub fn edit_paper(&mut self, id: u64, params: EditPaperParams) -> Result<()> {
         let paper = &mut self.paper;
-        update_field(&mut paper.intro, params.paper_info_url, 200)?;
+        update_field(&mut paper.paper_info_url, params.paper_info_url, 200)?;
         update_field(&mut paper.paper_uri, params.paper_uri, 200)?;
         update_numeric_field(&mut paper.price, params.price)?;
         update_numeric_field(&mut paper.version, params.version)?;

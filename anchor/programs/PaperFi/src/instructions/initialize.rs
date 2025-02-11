@@ -34,10 +34,10 @@ impl<'info> Initialize<'info> {
             config.admins.push(self.admin.key());
         }
 
-        if !config.fee {
-            config.fee;
+        if config.fee.is_none() {
+            config.fee = Some(2); // 2%
             config.bump = bumps.config;
-            config.vault_bumpp = bumps.config_vault;
+            config.vault_bump = bumps.config_vault;
         }
 
         Ok(())

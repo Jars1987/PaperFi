@@ -70,12 +70,15 @@ impl<'info> BuyPaper<'info> {
             //need to make sure that price is u64 and in lamports
             transfer(cpi_ctx, self.paper.price)?;
 
+            //get fee percentage
+            let fee_percentage = self.config.fee.unwrap_or(0) as u64;
+
             //Calculate price of fees and transfer fee from buyer to admin vault
             let total_amout = self.paper.price
-                .checked_mul(100u64 + (self.config.fee as u64))
+                .checked_mul(100u64 + fee_percentage)
                 .ok_or(ErrorCode::MathOverflow)?;
 
-            let fee_amout = total_amout.checked_div(100).ok_or(ErrorCode::MathOverflow)?;
+            let fee_amount = total_amout.checked_div(100).ok_or(ErrorCode::MathOverflow)?;
 
             let cpi_accounts_2 = Transfer {
                 from: self.buyer.to_account_info(),
@@ -83,7 +86,7 @@ impl<'info> BuyPaper<'info> {
             };
 
             let cpi_ctx_2 = CpiContext::new(self.system_program.to_account_info(), cpi_accounts_2);
-            transfer(cpi_ctx_2, fee_amout)?;
+            transfer(cpi_ctx_2, fee_amount)?;
         }
 
         //register sales in the paper state

@@ -1,15 +1,14 @@
 use anchor_lang::prelude::*;
 use anchor_lang::system_program::{ transfer, Transfer };
 use crate::errors::ErrorCode;
-user crate::state::{PaperFiConfig}
+use crate::state::{ PaperFiConfig };
 
 #[derive(Accounts)]
-#[instruction(admin_vault_bump: u8)]
 pub struct AdminWithdraw<'info> {
     #[account(mut)]
     pub admin: Signer<'info>,
 
-    #[account(mut, seeds = [b"config_vault", config.key().as_ref()], bump = admin_vault_bump)]
+    #[account(mut, seeds = [b"config_vault", config.key().as_ref()], bump = config.vault_bump)]
     pub config_vault: SystemAccount<'info>,
 
     #[account(seeds = [b"paperfi_config"], bump = config.bump)]
@@ -22,10 +21,10 @@ impl<'info> AdminWithdraw<'info> {
     pub fn admin_withdraw(&mut self) -> Result<()> {
         require!(self.config.admins.contains(&self.admin.key()), ErrorCode::Unauthorized);
 
-        let vault_balance = self.admin_vault.lamports();
+        let vault_balance = self.config_vault.lamports();
         require!(vault_balance > 0, ErrorCode::InsufficientFunds);
         let config_seed = self.config.key();
-        let seeds = &[b"config_vault", admin_seed.as_ref(), &[self.config.config_vault]];
+        let seeds = &[b"config_vault", config_seed.as_ref(), &[self.config.vault_bump]];
         let signer_seeds = &[&seeds[..]];
 
         let cpi_program = self.system_program.to_account_info();

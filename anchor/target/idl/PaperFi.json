@@ -26,18 +26,19 @@
           "signer": true
         },
         {
-          "name": "admin_vault",
+          "name": "config_vault",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
-                  97,
-                  100,
-                  109,
-                  105,
+                  99,
+                  111,
                   110,
+                  102,
+                  105,
+                  103,
                   95,
                   118,
                   97,
@@ -48,7 +49,33 @@
               },
               {
                 "kind": "account",
-                "path": "admin"
+                "path": "config"
+              }
+            ]
+          }
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114,
+                  102,
+                  105,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -58,12 +85,7 @@
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": [
-        {
-          "name": "admin_vault_bump",
-          "type": "u8"
-        }
-      ]
+      "args": []
     },
     {
       "name": "buy_paper",
@@ -154,39 +176,44 @@
           }
         },
         {
-          "name": "admin",
+          "name": "config",
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
+                  112,
                   97,
-                  100,
-                  109,
+                  112,
+                  101,
+                  114,
+                  102,
                   105,
-                  110
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
                 ]
-              },
-              {
-                "kind": "account",
-                "path": "admin.owner",
-                "account": "Admin"
               }
             ]
           }
         },
         {
-          "name": "admin_vault",
+          "name": "config_vault",
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
-                  97,
-                  100,
-                  109,
-                  105,
+                  99,
+                  111,
                   110,
+                  102,
+                  105,
+                  103,
                   95,
                   118,
                   97,
@@ -197,7 +224,7 @@
               },
               {
                 "kind": "account",
-                "path": "admin"
+                "path": "config"
               }
             ]
           }
@@ -490,39 +517,18 @@
           "signer": true
         },
         {
-          "name": "admin_account",
-          "writable": true,
+          "name": "config_vault",
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
-                  97,
-                  100,
-                  109,
-                  105,
-                  110
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "admin"
-              }
-            ]
-          }
-        },
-        {
-          "name": "admin_vault",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  97,
-                  100,
-                  109,
-                  105,
+                  99,
+                  111,
                   110,
+                  102,
+                  105,
+                  103,
                   95,
                   118,
                   97,
@@ -533,7 +539,7 @@
               },
               {
                 "kind": "account",
-                "path": "admin"
+                "path": "config"
               }
             ]
           }
@@ -589,28 +595,6 @@
           "name": "admin",
           "writable": true,
           "signer": true
-        },
-        {
-          "name": "admin_account",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  97,
-                  100,
-                  109,
-                  105,
-                  110
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "admin"
-              }
-            ]
-          }
         },
         {
           "name": "config",
@@ -702,24 +686,27 @@
           }
         },
         {
-          "name": "admin_account",
-          "writable": true,
+          "name": "config",
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
+                  112,
                   97,
-                  100,
-                  109,
+                  112,
+                  101,
+                  114,
+                  102,
                   105,
-                  110
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
                 ]
-              },
-              {
-                "kind": "account",
-                "path": "admin_account.owner",
-                "account": "Admin"
               }
             ]
           }
@@ -829,15 +816,7 @@
           "type": "u64"
         },
         {
-          "name": "authors",
-          "type": "string"
-        },
-        {
-          "name": "title",
-          "type": "string"
-        },
-        {
-          "name": "intro",
+          "name": "paper_info_url",
           "type": "string"
         },
         {
@@ -1130,19 +1109,6 @@
   ],
   "accounts": [
     {
-      "name": "Admin",
-      "discriminator": [
-        244,
-        158,
-        220,
-        65,
-        8,
-        73,
-        4,
-        65
-      ]
-    },
-    {
       "name": "BaseCollectionV1",
       "discriminator": [
         0,
@@ -1270,34 +1236,6 @@
   ],
   "types": [
     {
-      "name": "Admin",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "owner",
-            "type": "pubkey"
-          },
-          {
-            "name": "vault",
-            "type": "pubkey"
-          },
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "vault_bump",
-            "type": "u8"
-          },
-          {
-            "name": "fee",
-            "type": "u8"
-          }
-        ]
-      }
-    },
-    {
       "name": "BaseCollectionV1",
       "type": {
         "kind": "struct",
@@ -1355,19 +1293,7 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "authors",
-            "type": {
-              "option": "string"
-            }
-          },
-          {
-            "name": "title",
-            "type": {
-              "option": "string"
-            }
-          },
-          {
-            "name": "intro",
+            "name": "paper_info_url",
             "type": {
               "option": "string"
             }
@@ -1481,15 +1407,7 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "authors",
-            "type": "string"
-          },
-          {
-            "name": "title",
-            "type": "string"
-          },
-          {
-            "name": "intro",
+            "name": "paper_info_url",
             "type": "string"
           },
           {
@@ -1555,7 +1473,17 @@
             }
           },
           {
+            "name": "fee",
+            "type": {
+              "option": "u8"
+            }
+          },
+          {
             "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "vault_bump",
             "type": "u8"
           }
         ]
@@ -1692,10 +1620,6 @@
           },
           {
             "name": "owner",
-            "type": "pubkey"
-          },
-          {
-            "name": "vault",
             "type": "pubkey"
           },
           {

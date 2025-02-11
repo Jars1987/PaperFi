@@ -37,13 +37,11 @@ pub mod PaperFi {
     pub fn new_paper(
         context: Context<NewPaper>,
         id: u64,
-        authors: String,
-        title: String,
-        intro: String,
+        paper_info_url: String,
         price: u64,
         uri: String
     ) -> Result<()> {
-        context.accounts.new_paper(id, authors, title, intro, price, uri, &context.bumps)?;
+        context.accounts.new_paper(id, paper_info_url, price, uri, &context.bumps)?;
         Ok(())
     }
 

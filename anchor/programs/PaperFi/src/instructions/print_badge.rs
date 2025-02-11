@@ -16,7 +16,7 @@ use mpl_core::{
         PluginAuthorityPair,
     },
 };
-use crate::state::{ UserAccount, Admin };
+use crate::state::{ UserAccount, PaperFiConfig };
 use crate::errors::ErrorCode;
 use crate::check_user_achievement;
 use crate::helpers::*;
@@ -29,12 +29,12 @@ pub struct PrintBadge<'info> {
     #[account(seeds = [b"user", user.key().as_ref()], bump = user_account.bump)]
     pub user_account: Account<'info, UserAccount>,
 
-    #[account(mut, seeds = [b"admin", admin_account.owner.key().as_ref()], bump = admin_account.bump)]
-    pub admin_account: Account<'info, Admin>,
+    #[account(seeds = [b"paperfi_config"], bump = config.bump)]
+    pub config: Account<'info, PaperFiConfig>,
 
     #[account(
        mut,
-       constraint = badge.update_authority == admin_account.key(),
+       constraint = badge.update_authority == config.key(),
    )]
     pub badge: Account<'info, BaseCollectionV1>,
 
@@ -86,15 +86,14 @@ impl<'info> PrintBadge<'info> {
             authority: None,
         });
 
-        let binding = self.admin_account.owner.key();
-        let signer_seeds = &[b"manager".as_ref(), binding.as_ref(), &[self.admin_account.bump]];
+        let signer_seeds: &[&[u8]] = &[b"paperfi_config", &[self.config.bump]];
 
         // Create the Ticket
         CreateV2CpiBuilder::new(&self.mpl_core_program.to_account_info())
             .asset(&self.print.to_account_info())
             .collection(Some(&self.badge.to_account_info()))
             .payer(&self.user.to_account_info())
-            .authority(Some(&self.admin_account.to_account_info()))
+            .authority(Some(&self.config.to_account_info()))
             .owner(Some(&self.user.to_account_info()))
             .system_program(&self.system_program.to_account_info())
             .name(args.name)

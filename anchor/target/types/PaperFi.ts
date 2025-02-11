@@ -32,18 +32,19 @@ export type PaperFi = {
           "signer": true
         },
         {
-          "name": "adminVault",
+          "name": "configVault",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
-                  97,
-                  100,
-                  109,
-                  105,
+                  99,
+                  111,
                   110,
+                  102,
+                  105,
+                  103,
                   95,
                   118,
                   97,
@@ -54,7 +55,33 @@ export type PaperFi = {
               },
               {
                 "kind": "account",
-                "path": "admin"
+                "path": "config"
+              }
+            ]
+          }
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114,
+                  102,
+                  105,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -64,12 +91,7 @@ export type PaperFi = {
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": [
-        {
-          "name": "adminVaultBump",
-          "type": "u8"
-        }
-      ]
+      "args": []
     },
     {
       "name": "buyPaper",
@@ -160,39 +182,44 @@ export type PaperFi = {
           }
         },
         {
-          "name": "admin",
+          "name": "config",
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
+                  112,
                   97,
-                  100,
-                  109,
+                  112,
+                  101,
+                  114,
+                  102,
                   105,
-                  110
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
                 ]
-              },
-              {
-                "kind": "account",
-                "path": "admin.owner",
-                "account": "admin"
               }
             ]
           }
         },
         {
-          "name": "adminVault",
+          "name": "configVault",
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
-                  97,
-                  100,
-                  109,
-                  105,
+                  99,
+                  111,
                   110,
+                  102,
+                  105,
+                  103,
                   95,
                   118,
                   97,
@@ -203,7 +230,7 @@ export type PaperFi = {
               },
               {
                 "kind": "account",
-                "path": "admin"
+                "path": "config"
               }
             ]
           }
@@ -496,39 +523,18 @@ export type PaperFi = {
           "signer": true
         },
         {
-          "name": "adminAccount",
-          "writable": true,
+          "name": "configVault",
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
-                  97,
-                  100,
-                  109,
-                  105,
-                  110
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "admin"
-              }
-            ]
-          }
-        },
-        {
-          "name": "adminVault",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  97,
-                  100,
-                  109,
-                  105,
+                  99,
+                  111,
                   110,
+                  102,
+                  105,
+                  103,
                   95,
                   118,
                   97,
@@ -539,7 +545,7 @@ export type PaperFi = {
               },
               {
                 "kind": "account",
-                "path": "admin"
+                "path": "config"
               }
             ]
           }
@@ -595,28 +601,6 @@ export type PaperFi = {
           "name": "admin",
           "writable": true,
           "signer": true
-        },
-        {
-          "name": "adminAccount",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  97,
-                  100,
-                  109,
-                  105,
-                  110
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "admin"
-              }
-            ]
-          }
         },
         {
           "name": "config",
@@ -708,24 +692,27 @@ export type PaperFi = {
           }
         },
         {
-          "name": "adminAccount",
-          "writable": true,
+          "name": "config",
           "pda": {
             "seeds": [
               {
                 "kind": "const",
                 "value": [
+                  112,
                   97,
-                  100,
-                  109,
+                  112,
+                  101,
+                  114,
+                  102,
                   105,
-                  110
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
                 ]
-              },
-              {
-                "kind": "account",
-                "path": "admin_account.owner",
-                "account": "admin"
               }
             ]
           }
@@ -835,15 +822,7 @@ export type PaperFi = {
           "type": "u64"
         },
         {
-          "name": "authors",
-          "type": "string"
-        },
-        {
-          "name": "title",
-          "type": "string"
-        },
-        {
-          "name": "intro",
+          "name": "paperInfoUrl",
           "type": "string"
         },
         {
@@ -1136,19 +1115,6 @@ export type PaperFi = {
   ],
   "accounts": [
     {
-      "name": "admin",
-      "discriminator": [
-        244,
-        158,
-        220,
-        65,
-        8,
-        73,
-        4,
-        65
-      ]
-    },
-    {
       "name": "baseCollectionV1",
       "discriminator": [
         0,
@@ -1276,34 +1242,6 @@ export type PaperFi = {
   ],
   "types": [
     {
-      "name": "admin",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "owner",
-            "type": "pubkey"
-          },
-          {
-            "name": "vault",
-            "type": "pubkey"
-          },
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "vaultBump",
-            "type": "u8"
-          },
-          {
-            "name": "fee",
-            "type": "u8"
-          }
-        ]
-      }
-    },
-    {
       "name": "baseCollectionV1",
       "type": {
         "kind": "struct",
@@ -1361,19 +1299,7 @@ export type PaperFi = {
         "kind": "struct",
         "fields": [
           {
-            "name": "authors",
-            "type": {
-              "option": "string"
-            }
-          },
-          {
-            "name": "title",
-            "type": {
-              "option": "string"
-            }
-          },
-          {
-            "name": "intro",
+            "name": "paperInfoUrl",
             "type": {
               "option": "string"
             }
@@ -1487,15 +1413,7 @@ export type PaperFi = {
         "kind": "struct",
         "fields": [
           {
-            "name": "authors",
-            "type": "string"
-          },
-          {
-            "name": "title",
-            "type": "string"
-          },
-          {
-            "name": "intro",
+            "name": "paperInfoUrl",
             "type": "string"
           },
           {
@@ -1561,7 +1479,17 @@ export type PaperFi = {
             }
           },
           {
+            "name": "fee",
+            "type": {
+              "option": "u8"
+            }
+          },
+          {
             "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "vaultBump",
             "type": "u8"
           }
         ]
@@ -1698,10 +1626,6 @@ export type PaperFi = {
           },
           {
             "name": "owner",
-            "type": "pubkey"
-          },
-          {
-            "name": "vault",
             "type": "pubkey"
           },
           {
