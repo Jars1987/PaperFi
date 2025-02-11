@@ -16,22 +16,22 @@ pub struct BuyPaper<'info> {
     )]
     pub buyer_user_account: Box<Account<'info, UserAccount>>, //already init, to use the platform must signup therefore user already exists
 
-    #[account(mut, seeds = [b"user", paper.owner.key().as_ref()], bump = user_account.bump)]
+    #[account(mut, seeds = [b"user", paper.owner.as_ref()], bump = user_account.bump)]
     pub user_account: Box<Account<'info, UserAccount>>, //paper owner user account
 
-    #[account(seeds = [b"user_vault", paper.owner.key().as_ref()], bump)]
-    pub user_vault: Box<SystemAccount<'info>>,
+    #[account(seeds = [b"user_vault", paper.owner.as_ref()], bump = user_account.vault_bump)]
+    pub user_vault: SystemAccount<'info>,
 
     #[account(seeds = [b"paperfi_config"], bump = config.bump)]
     pub config: Box<Account<'info, PaperFiConfig>>,
 
-    #[account(seeds = [b"config_vault", config.key().as_ref()], bump)]
-    pub config_vault: Box<SystemAccount<'info>>,
+    #[account(seeds = [b"config_vault", config.key().as_ref()], bump = config.vault_bump)]
+    pub config_vault: SystemAccount<'info>,
 
     #[account(
-      mut,
-        seeds = [b"paper", paper.owner.key().as_ref(), &id.to_le_bytes()], // ** Check foot notes
-        bump
+        mut,
+        seeds = [b"paper", paper.owner.as_ref(), &id.to_le_bytes()], // ** Check foot notes
+        bump = paper.bump
     )]
     pub paper: Box<Account<'info, Paper>>,
 
@@ -48,13 +48,13 @@ pub struct BuyPaper<'info> {
 }
 
 impl<'info> BuyPaper<'info> {
-    pub fn buy_paper(&mut self, bumps: &BuyPaperBumps) -> Result<()> {
+    pub fn buy_paper(&mut self, _id: u64, bump: u8) -> Result<()> {
         //create PaperOwned
         self.paper_owned.set_inner(PaperOwned {
             buyer: self.buyer.key(),
             paper: self.paper.key(),
             timestamp: Clock::get()?.unix_timestamp as u64,
-            bump: bumps.paper_owned,
+            bump,
         });
 
         //Transfer paper price amount from buyer to user vault

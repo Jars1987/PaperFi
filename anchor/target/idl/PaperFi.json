@@ -290,7 +290,12 @@
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "id",
+          "type": "u64"
+        }
+      ]
     },
     {
       "name": "edit_paper",
@@ -1232,6 +1237,11 @@
       "code": 6008,
       "name": "TooManyAdmins",
       "msg": "Max Admins allowed have been reached"
+    },
+    {
+      "code": 6009,
+      "name": "IncorrectPricing",
+      "msg": "Prince can't be negative"
     }
   ],
   "types": [

@@ -296,7 +296,12 @@ export type PaperFi = {
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "id",
+          "type": "u64"
+        }
+      ]
     },
     {
       "name": "editPaper",
@@ -1238,6 +1243,11 @@ export type PaperFi = {
       "code": 6008,
       "name": "tooManyAdmins",
       "msg": "Max Admins allowed have been reached"
+    },
+    {
+      "code": 6009,
+      "name": "incorrectPricing",
+      "msg": "Prince can't be negative"
     }
   ],
   "types": [

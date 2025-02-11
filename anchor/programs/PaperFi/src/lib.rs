@@ -64,8 +64,8 @@ pub mod PaperFi {
     }
 
     //Buy Paper - PaperOwned PDA created, get account from Discriminator and Buyer Publickey, get the file decrypted in the Front End
-    pub fn buy_paper(context: Context<BuyPaper>) -> Result<()> {
-        context.accounts.buy_paper(&context.bumps)?;
+    pub fn buy_paper(context: Context<BuyPaper>, id: u64) -> Result<()> {
+        context.accounts.buy_paper(id, context.bumps.paper_owned)?;
         Ok(())
     }
 
