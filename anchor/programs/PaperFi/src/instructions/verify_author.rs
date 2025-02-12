@@ -9,13 +9,10 @@ pub struct VerifyAuthor<'info> {
     #[account(mut)]
     pub author: Signer<'info>,
 
-    #[account(seeds = [b"paper", paper.owner.as_ref(), &id.to_le_bytes()], bump = paper.bump)]
-    pub paper: Account<'info, Paper>,
-
     #[account(
         mut,
-        seeds = [b"author", author.key().as_ref(), paper.key().as_ref()],
-        bump
+        seeds = [b"author", paper_author.author.as_ref(), paper_author.paper.as_ref()],
+        bump = paper_author.bump
     )]
     pub paper_author: Account<'info, PaperAuthor>,
 
