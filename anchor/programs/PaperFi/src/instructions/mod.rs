@@ -10,6 +10,8 @@ pub mod user_withdraw;
 pub mod admin_withdraw;
 pub mod make_badge;
 pub mod print_badge;
+pub mod add_author;
+pub mod verify_author;
 
 pub use initialize::*;
 pub use new_user::*;
@@ -23,3 +25,5 @@ pub use user_withdraw::*;
 pub use admin_withdraw::*;
 pub use make_badge::*;
 pub use print_badge::*;
+pub use add_author::*;
+pub use verify_author::*;

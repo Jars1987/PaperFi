@@ -746,6 +746,92 @@
       ]
     },
     {
+      "name": "new_author",
+      "discriminator": [
+        221,
+        138,
+        151,
+        50,
+        131,
+        22,
+        165,
+        67
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "paper",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "arg",
+                "path": "id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "paper_author",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "author"
+              },
+              {
+                "kind": "account",
+                "path": "paper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "author",
+          "type": "pubkey"
+        },
+        {
+          "name": "id",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "new_paper",
       "discriminator": [
         151,
@@ -806,6 +892,33 @@
               {
                 "kind": "arg",
                 "path": "id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "paper_author",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "account",
+                "path": "paper"
               }
             ]
           }
@@ -1110,6 +1223,89 @@
           "type": "u8"
         }
       ]
+    },
+    {
+      "name": "verify",
+      "discriminator": [
+        133,
+        161,
+        141,
+        48,
+        120,
+        198,
+        88,
+        150
+      ],
+      "accounts": [
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "paper",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "paper.owner",
+                "account": "Paper"
+              },
+              {
+                "kind": "arg",
+                "path": "id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "paper_author",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "author"
+              },
+              {
+                "kind": "account",
+                "path": "paper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": "u64"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -1137,6 +1333,19 @@
         93,
         63,
         12
+      ]
+    },
+    {
+      "name": "PaperAuthor",
+      "discriminator": [
+        23,
+        71,
+        130,
+        209,
+        199,
+        45,
+        150,
+        208
       ]
     },
     {
@@ -1467,6 +1676,30 @@
           {
             "name": "paper_uri",
             "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PaperAuthor",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "author",
+            "type": "pubkey"
+          },
+          {
+            "name": "paper",
+            "type": "pubkey"
+          },
+          {
+            "name": "verify",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
           }
         ]
       }

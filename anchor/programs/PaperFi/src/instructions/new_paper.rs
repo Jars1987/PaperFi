@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 use regex::Regex;
-use crate::state::{ Paper, UserAccount, ReviewStatus };
+use crate::state::{ Paper, UserAccount, ReviewStatus, PaperAuthor };
 use crate::errors::ErrorCode;
 use crate::{ validate_no_emojis };
 
@@ -21,6 +21,15 @@ pub struct NewPaper<'info> {
         bump
     )]
     pub paper: Account<'info, Paper>,
+
+    #[account(
+        init,
+        payer = owner,
+        space = PaperAuthor::INIT_SPACE,
+        seeds = [b"author", owner.key().as_ref(), paper.key().as_ref()],
+        bump
+    )]
+    pub paper_author: Account<'info, PaperAuthor>,
 
     pub system_program: Program<'info, System>,
 }
@@ -51,7 +60,7 @@ impl<'info> NewPaper<'info> {
         //set paper
         self.paper.set_inner(Paper {
             paper_info_url,
-            owner: self.user_account.key(),
+            owner: self.owner.key(),
             review_status,
             version: 1,
             listed: true,
@@ -66,6 +75,14 @@ impl<'info> NewPaper<'info> {
 
         self.user_account.papers += 1;
         self.user_account.timestamp = Clock::get()?.unix_timestamp as u64;
+
+        //set author
+        self.paper_author.set_inner(PaperAuthor {
+            author: self.owner.key(),
+            paper: self.paper.key(),
+            verify: true,
+            bump: bump.paper_author,
+        });
 
         Ok(())
     }

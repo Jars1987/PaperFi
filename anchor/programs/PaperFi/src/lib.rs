@@ -48,6 +48,21 @@ pub mod PaperFi {
         Ok(())
     }
 
+    //Add co-author
+
+    pub fn new_author(context: Context<AddAuthor>, author: Pubkey, id: u64) -> Result<()> {
+        context.accounts.add_author(author, id, &context.bumps)?;
+        Ok(())
+    }
+
+    //verify author
+    pub fn verify(context: Context<VerifyAuthor>, id: u64) -> Result<()> {
+        context.accounts.verify_author(id)?;
+        Ok(())
+    }
+
+    //Remove Author? Check paper owner
+
     pub fn review_paper(
         context: Context<ReviewPaper>,
         id: u64,
@@ -93,7 +108,7 @@ pub mod PaperFi {
 }
 
 /* ------------------ Next Steps -------------------------
-    // Add Safeguards to all instruction
+    // Add Paper Auth State, initialize Paper Auth when you create a paper. Add instruction to initilize paper author and to edit verify author
     //Happy test and Unhappy test
 
 Considerations:

@@ -752,6 +752,92 @@ export type PaperFi = {
       ]
     },
     {
+      "name": "newAuthor",
+      "discriminator": [
+        221,
+        138,
+        151,
+        50,
+        131,
+        22,
+        165,
+        67
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "paper",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "arg",
+                "path": "id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "paperAuthor",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "author"
+              },
+              {
+                "kind": "account",
+                "path": "paper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "author",
+          "type": "pubkey"
+        },
+        {
+          "name": "id",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "newPaper",
       "discriminator": [
         151,
@@ -812,6 +898,33 @@ export type PaperFi = {
               {
                 "kind": "arg",
                 "path": "id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "paperAuthor",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "account",
+                "path": "paper"
               }
             ]
           }
@@ -1116,6 +1229,89 @@ export type PaperFi = {
           "type": "u8"
         }
       ]
+    },
+    {
+      "name": "verify",
+      "discriminator": [
+        133,
+        161,
+        141,
+        48,
+        120,
+        198,
+        88,
+        150
+      ],
+      "accounts": [
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "paper",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "paper.owner",
+                "account": "paper"
+              },
+              {
+                "kind": "arg",
+                "path": "id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "paperAuthor",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "author"
+              },
+              {
+                "kind": "account",
+                "path": "paper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": "u64"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -1143,6 +1339,19 @@ export type PaperFi = {
         93,
         63,
         12
+      ]
+    },
+    {
+      "name": "paperAuthor",
+      "discriminator": [
+        23,
+        71,
+        130,
+        209,
+        199,
+        45,
+        150,
+        208
       ]
     },
     {
@@ -1473,6 +1682,30 @@ export type PaperFi = {
           {
             "name": "paperUri",
             "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "paperAuthor",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "author",
+            "type": "pubkey"
+          },
+          {
+            "name": "paper",
+            "type": "pubkey"
+          },
+          {
+            "name": "verify",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
           }
         ]
       }
