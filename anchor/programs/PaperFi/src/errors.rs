@@ -22,4 +22,6 @@ pub enum ErrorCode {
     TooManyAdmins,
     #[msg("Prince can't be negative")]
     IncorrectPricing,
+    #[msg("New version can't be lower than the previous version")]
+    InvalidVersion,
 }

@@ -1249,32 +1249,6 @@ export type PaperFi = {
           "signer": true
         },
         {
-          "name": "paper",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  112,
-                  101,
-                  114
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "paper.owner",
-                "account": "paper"
-              },
-              {
-                "kind": "arg",
-                "path": "id"
-              }
-            ]
-          }
-        },
-        {
           "name": "paperAuthor",
           "writable": true,
           "pda": {
@@ -1292,11 +1266,13 @@ export type PaperFi = {
               },
               {
                 "kind": "account",
-                "path": "author"
+                "path": "paper_author.author",
+                "account": "paperAuthor"
               },
               {
                 "kind": "account",
-                "path": "paper"
+                "path": "paper_author.paper",
+                "account": "paperAuthor"
               }
             ]
           }
@@ -1457,6 +1433,11 @@ export type PaperFi = {
       "code": 6009,
       "name": "incorrectPricing",
       "msg": "Prince can't be negative"
+    },
+    {
+      "code": 6010,
+      "name": "invalidVersion",
+      "msg": "New version can't be lower than the previous version"
     }
   ],
   "types": [
@@ -1577,24 +1558,6 @@ export type PaperFi = {
             "name": "title",
             "type": {
               "option": "string"
-            }
-          },
-          {
-            "name": "purchases",
-            "type": {
-              "option": "u32"
-            }
-          },
-          {
-            "name": "papers",
-            "type": {
-              "option": "u32"
-            }
-          },
-          {
-            "name": "reviews",
-            "type": {
-              "option": "u32"
             }
           }
         ]

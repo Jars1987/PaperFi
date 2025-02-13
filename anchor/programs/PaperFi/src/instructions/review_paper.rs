@@ -19,14 +19,14 @@ pub struct ReviewPaper<'info> {
 
     #[account(
       mut, 
-      seeds = [b"user", paper.owner.key().as_ref()],
+      seeds = [b"user", paper.owner.as_ref()],
        bump = user_account.bump
       )]
     pub user_account: Account<'info, UserAccount>, //paper owner user account
 
     #[account(
     mut,
-    seeds = [b"paper", paper.owner.key().as_ref(), &id.to_le_bytes()],
+    seeds = [b"paper", paper.owner.as_ref(), &id.to_le_bytes()],
     bump = paper.bump
 )]
     pub paper: Account<'info, Paper>,

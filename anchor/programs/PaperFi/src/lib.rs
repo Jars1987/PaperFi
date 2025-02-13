@@ -44,6 +44,7 @@ pub mod PaperFi {
     }
 
     pub fn edit_paper(context: Context<EditPaper>, id: u64, params: EditPaperParams) -> Result<()> {
+        //key value
         context.accounts.edit_paper(id, params)?;
         Ok(())
     }
@@ -108,8 +109,8 @@ pub mod PaperFi {
 }
 
 /* ------------------ Next Steps -------------------------
-    // Add Paper Auth State, initialize Paper Auth when you create a paper. Add instruction to initilize paper author and to edit verify author
     //Happy test and Unhappy test
+    //check unhappy model from Voting App
 
 Considerations:
 - Verify Badges needs to be done in the client --> https://developers.metaplex.com/core/plugins/verified-creators

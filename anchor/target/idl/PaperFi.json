@@ -1243,32 +1243,6 @@
           "signer": true
         },
         {
-          "name": "paper",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  112,
-                  101,
-                  114
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "paper.owner",
-                "account": "Paper"
-              },
-              {
-                "kind": "arg",
-                "path": "id"
-              }
-            ]
-          }
-        },
-        {
           "name": "paper_author",
           "writable": true,
           "pda": {
@@ -1286,11 +1260,13 @@
               },
               {
                 "kind": "account",
-                "path": "author"
+                "path": "paper_author.author",
+                "account": "PaperAuthor"
               },
               {
                 "kind": "account",
-                "path": "paper"
+                "path": "paper_author.paper",
+                "account": "PaperAuthor"
               }
             ]
           }
@@ -1451,6 +1427,11 @@
       "code": 6009,
       "name": "IncorrectPricing",
       "msg": "Prince can't be negative"
+    },
+    {
+      "code": 6010,
+      "name": "InvalidVersion",
+      "msg": "New version can't be lower than the previous version"
     }
   ],
   "types": [
@@ -1571,24 +1552,6 @@
             "name": "title",
             "type": {
               "option": "string"
-            }
-          },
-          {
-            "name": "purchases",
-            "type": {
-              "option": "u32"
-            }
-          },
-          {
-            "name": "papers",
-            "type": {
-              "option": "u32"
-            }
-          },
-          {
-            "name": "reviews",
-            "type": {
-              "option": "u32"
             }
           }
         ]

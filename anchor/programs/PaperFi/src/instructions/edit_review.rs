@@ -12,7 +12,7 @@ pub struct EditReview<'info> {
 
     #[account(
     mut,
-    seeds = [b"paper", paper.owner.key().as_ref(), &id.to_le_bytes()],
+    seeds = [b"paper", paper.owner.as_ref(), &id.to_le_bytes()],
     bump = paper.bump
 )]
     pub paper: Account<'info, Paper>,
